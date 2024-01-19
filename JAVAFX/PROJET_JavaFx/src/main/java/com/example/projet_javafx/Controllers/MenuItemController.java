@@ -19,6 +19,9 @@ public class MenuItemController {
     private TableView<Menuitems> menuItemTableView;
 
     @FXML
+    private TextField MenuItemIdTextField;
+
+    @FXML
     private TextField restaurantIdTextField;
 
     @FXML
@@ -54,7 +57,7 @@ public class MenuItemController {
             e.printStackTrace(); // Handle the exception appropriately
         }
 
-        //menuItemTableView.setRowFactory(param -> new MenuItemTableRow());
+        menuItemTableView.setRowFactory(param -> new MenuItemTableRow());
 
         menuItemTableView.setItems(menuItemList);
 
@@ -125,11 +128,12 @@ public class MenuItemController {
 
     @FXML
     private void handleAddMenuItem() {
+        int MenuItemId = Integer.parseInt(MenuItemIdTextField.getText());
         int restaurantId = Integer.parseInt(restaurantIdTextField.getText());
         String nomItem = nomItemTextField.getText();
         String description = descriptionTextField.getText();
 
-        Menuitems newMenuItem = new Menuitems(restaurantId, nomItem, description);
+        Menuitems newMenuItem = new Menuitems(MenuItemId,restaurantId, nomItem, description);
 
         try {
             servicePlat.ajouter(newMenuItem);
@@ -137,6 +141,7 @@ public class MenuItemController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        MenuItemIdTextField.clear();
 
         restaurantIdTextField.clear();
         nomItemTextField.clear();
@@ -145,23 +150,26 @@ public class MenuItemController {
 
     @FXML
     private void handleUpdateMenuItem() {
+        int MenuItemId = Integer.parseInt(MenuItemIdTextField.getText());
         int restaurantId = Integer.parseInt(restaurantIdTextField.getText());
         String nomItem = nomItemTextField.getText();
         String description = descriptionTextField.getText();
+        System.out.println("updaaaaaaaaaaaaaaaaaaaaaaaaaaaatttttttttttttteeeeeeeeee: "+MenuItemId+restaurantId+nomItem+description);
 
-        Menuitems updatedMenuItem = new Menuitems(restaurantId, nomItem, description);
+        Menuitems updatedMenuItem = new Menuitems(MenuItemId,restaurantId, nomItem, description);
 
         try {
-            Menuitems selectedMenuItem = menuItemTableView.getSelectionModel().getSelectedItem();
-            if (selectedMenuItem != null) {
-                updatedMenuItem.setMenuItemID(selectedMenuItem.getMenuItemID());
+        //    Menuitems selectedMenuItem = menuItemTableView.getSelectionModel().getSelectedItem();
+        //    System.out.println("selected menuItem "+selectedMenuItem);
+        //    if (selectedMenuItem != null) {
+              //  updatedMenuItem.setMenuItemID(selectedMenuItem.getMenuItemID());
                 servicePlat.update(updatedMenuItem);
                 initialize();
-            }
+          //  }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        MenuItemIdTextField.clear();
         restaurantIdTextField.clear();
         nomItemTextField.clear();
         descriptionTextField.clear();

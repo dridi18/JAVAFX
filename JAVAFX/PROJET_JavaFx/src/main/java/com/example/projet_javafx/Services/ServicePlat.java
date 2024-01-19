@@ -38,6 +38,8 @@ public class ServicePlat implements IServicePlat<Menuitems> {
     @Override
     public void update(Menuitems menuItem) throws SQLException {
         String req = "UPDATE menuitems SET " +
+                "RestaurantID = '" + menuItem.getRestaurantID() + "', " +
+
                 "NomItem = '" + menuItem.getNomItem() + "', " +
                 "Description = '" + menuItem.getDescription() + "' " +
                 "WHERE MenuItemId = " + menuItem.getMenuItemID();
